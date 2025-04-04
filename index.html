@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activiteitenwebsite</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            const buttonStyles = {
+                margin: '5px',
+                padding: '10px 15px',
+                border: '1px solid black',
+                borderRadius: '8px',
+                color: 'white',
+                cursor: 'pointer',
+            };
+
+            const activitiesStyles = {
+                height: "40px",
+                width: "600px",
+                border: "1px solid black",
+                borderRadius: "50px",
+                margin: "10px",
+                backgroundColor: "white",
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                textAlign: "left",
+                display: "flex",
+                alignItems: "center",
+                paddingLeft: "15px"
+            };
+
+            const [bgColor, setBackgroundColor] = React.useState('lightgray');
+            const [headerText, setHeaderText] = React.useState('Select a category');
+
+            const handleButtonClick = (color, text) => {
+                setBackgroundColor(color);
+                setHeaderText(text);
+            };
+
+            return (
+                <center>
+                    <div>
+                        <h1>Activities Website</h1>
+                        <button style={{ ...buttonStyles, backgroundColor: '#16A085' }} onClick={() => handleButtonClick('#16A085', 'Education')}>Education</button>
+                        <button style={{ ...buttonStyles, backgroundColor: '#3498DB' }} onClick={() => handleButtonClick('#3498DB', 'Recreational')}>Recreational</button>
+                        <button style={{ ...buttonStyles, backgroundColor: '#9B59B6' }} onClick={() => handleButtonClick('#9B59B6', 'Social')}>Social</button>
+                        <button style={{ ...buttonStyles, backgroundColor: '#E74C3C' }} onClick={() => handleButtonClick('#E74C3C', 'Charity')}>Charity</button>
+                        <button style={{ ...buttonStyles, backgroundColor: '#F39C12' }} onClick={() => handleButtonClick('#F39C12', 'Cooking')}>Cooking</button>
+                        <button style={{ ...buttonStyles, backgroundColor: '#2ECC71' }} onClick={() => handleButtonClick('#2ECC71', 'Relaxation')}>Relaxation</button>
+                        <button style={{ ...buttonStyles, backgroundColor: '#33495E' }} onClick={() => handleButtonClick('#33495E', 'Busywork')}>Busywork</button>
+                    </div>
+
+                    <div style={{ margin: "20px", height: '400px', width: '665px', backgroundColor: bgColor, borderRadius: 28 }}>
+                        <h2 style={{ textAlign: 'left', padding: "20px 0px 0px 35px", color: 'white', textShadow: '1px 1px 2px black' }}>{headerText}</h2>
+
+                        <div style={{display:"block"}}>
+                            <div style={{ ...activitiesStyles }}>Activity 1 - Click for more details</div>
+                            <div style={{ ...activitiesStyles }}>Activity 2 - Click for more details</div>
+                            <div style={{ ...activitiesStyles }}>Activity 3 - Click for more details</div>
+                            <div style={{ ...activitiesStyles }}>Activity 4 - Click for more details</div>
+                            <div style={{ ...activitiesStyles }}>Activity 5 - Click for more details</div>
+                            <div style={{ ...activitiesStyles }}>Activity 6 - Click for more details</div>
+                        </div>
+
+
+                        <div style={{ ...activitiesStyles, height: "300px", display: "none", borderRadius: "28px" }}>
+                            <p>Availability:</p>
+                            <p>Type:</p>
+                            <p>Participants:</p>
+                            <p>Price:</p>
+                            <p>Accessability:</p>
+                            <p>Duration:</p>
+                            <p>Kid Friendly:</p>
+                            <p>Link:</p>
+                        </div>
+                    </div>
+                </center>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+
+</html>
