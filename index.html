@@ -65,8 +65,17 @@
                         <button style={{ ...buttonStyles, backgroundColor: '#33495E' }} onClick={() => handleButtonClick('#33495E', 'Busywork')}>Busywork</button>
                     </div>
 
-                    <div style={{ margin: "20px", height: '400px', width: '665px', backgroundColor: bgColor, borderRadius: 28 }}>
-                        <h2 style={{ textAlign: 'left', padding: "20px 0px 0px 35px", color: 'white', textShadow: '1px 1px 2px black' }}>{headerText}</h2>
+                    <div style={{height: '400px', width: '665px', backgroundColor: bgColor, borderRadius: 28 }}>
+
+                        
+                        <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "20px 35px 0px", color: 'white', textShadow: '1px 1px 2px black' }}>
+                            {headerText}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <input type="text" placeholder="Search for activities..." style={{ padding: "10px", borderRadius: "50px", border: "1px solid black", width: "250px", backgroundColor: "lightgray" }} />
+                                <img src="https://img.icons8.com/?size=512&id=59872&format=png" style={{ width: "30px", height: "30px", cursor: "pointer" }} />
+                            </div>
+                        </h2>
+                        
 
                         {showActivities ? (
                             <div style={{ display: "block" }}>
@@ -78,7 +87,7 @@
                                 <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 6 - Click for more details</div>
                             </div>
                         ) : (
-                            <div style={{ ...activitiesStyles, height: "300px", display: "block", borderRadius: "28px" }}>
+                            <div style={{ ...activitiesStyles, height: "298px", display: "block", borderRadius: "20px" }}>
                                 <p>Availability:</p>
                                 <p>Type:</p>
                                 <p>Participants:</p>
