@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activiteitenwebsite</title>
+    <title>Activities Website</title>
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -46,6 +46,16 @@
                 setBackgroundColor(color);
                 setHeaderText(text);
                 setShowActivities(true); // Reset to show activities when a main button is clicked
+
+            const Activities = [];
+            for (let i = 0; i < 6; i++) {
+                fetch("https://bored.api.lewagon.com/api/activity/?type="+text.toLowerCase())
+                .then(res => res.json())
+                .then(data => {
+                    Activities.push(data);
+                });
+            }
+            console.log(Activities);
             };
 
             const handleActivityClick = () => {
@@ -70,8 +80,8 @@
                         
                         <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "20px 35px 0px", color: 'white', textShadow: '1px 1px 2px black' }}>
                             {headerText}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <input type="text" placeholder="Search for activities..." style={{ padding: "10px", borderRadius: "50px", border: "1px solid black", width: "250px", backgroundColor: "lightgray" }} />
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
+                                <input type="text" placeholder="Search for activities..." style={{ padding: "10px", borderRadius: "50px", border: "1px solid black", width: "250px", backgroundColor: "lightgray", paddingRight: "30px" }} />
                                 <img src="https://img.icons8.com/?size=512&id=59872&format=png" style={{ width: "30px", height: "30px", cursor: "pointer" }} />
                             </div>
                         </h2>
@@ -87,15 +97,13 @@
                                 <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 6 - Click for more details</div>
                             </div>
                         ) : (
-                            <div style={{ ...activitiesStyles, height: "298px", display: "block", borderRadius: "20px" }}>
-                                <p>Availability:</p>
-                                <p>Type:</p>
-                                <p>Participants:</p>
-                                <p>Price:</p>
-                                <p>Accessability:</p>
-                                <p>Duration:</p>
-                                <p>Kid Friendly:</p>
-                                <p>Link:</p>
+                            <div style={{ ...activitiesStyles, height: "298px", display: "block", borderRadius: "20px"}}>
+                                <h3 style={{ paddingBottom: "20px"}}>Finish the code for your school project</h3>
+                                <p style={{ paddingBottom: "5px" }}>Type:</p>
+                                <p style={{ paddingBottom: "5px" }}>Participants:</p>
+                                <p style={{ paddingBottom: "5px" }}>Price:</p>
+                                <p style={{ paddingBottom: "5px" }}>Accessibility:</p>
+                                <p style={{ paddingBottom: "5px" }}>Link:</p>
                             </div>
                         )}
                     </div>
