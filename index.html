@@ -48,14 +48,22 @@
                 setShowActivities(true); // Reset to show activities when a main button is clicked
 
             const Activities = [];
-            for (let i = 0; i < 6; i++) {
-                fetch("https://bored.api.lewagon.com/api/activity/?type="+text.toLowerCase())
-                .then(res => res.json())
-                .then(data => {
-                    Activities.push(data);
-                });
-            }
-            console.log(Activities);
+            const uniqueKeys = new Set();
+
+            const fetchActivities = async () => {
+                while (Activities.length < 6) {
+                    await fetch("https://bored.api.lewagon.com/api/activity/?type=" + text.toLowerCase())
+                        .then(res => res.json())
+                        .then(data => {
+                            if (!uniqueKeys.has(data.key)) {
+                                uniqueKeys.add(data.key);
+                                Activities.push(data);
+                            }
+                        })
+                }
+                console.log(Activities);
+            };
+            fetchActivities();
             };
 
             const handleActivityClick = () => {
