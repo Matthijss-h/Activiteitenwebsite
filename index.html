@@ -41,29 +41,32 @@
             const [bgColor, setBackgroundColor] = React.useState('lightgray');
             const [headerText, setHeaderText] = React.useState('Select a category');
             const [showActivities, setShowActivities] = React.useState(true);
-
-            const handleButtonClick = (color, text) => {
-                setBackgroundColor(color);
-                setHeaderText(text);
-                setShowActivities(true); // Reset to show activities when a main button is clicked
+            const [activities, setActivities] = React.useState([]);
 
             const Activities = [];
             const uniqueKeys = new Set();
 
-            const fetchActivities = async () => {
+            const fetchActivities = async (type) => {
                 while (Activities.length < 6) {
-                    await fetch("https://bored.api.lewagon.com/api/activity/?type=" + text.toLowerCase())
+                    await fetch("https://bored.api.lewagon.com/api/activity/?type=" + type.toLowerCase())
                         .then(res => res.json())
                         .then(data => {
                             if (!uniqueKeys.has(data.key)) {
                                 uniqueKeys.add(data.key);
                                 Activities.push(data);
                             }
-                        })
+                        });
                 }
                 console.log(Activities);
+                setActivities(Activities[0].activity);
+                console.log(Activities[0]);
             };
-            fetchActivities();
+
+            const handleButtonClick = (color, text) => {
+                setBackgroundColor(color);
+                setHeaderText(text);
+                setShowActivities(true); // Reset to show activities when a main button is clicked
+                fetchActivities(text);
             };
 
             const handleActivityClick = () => {
@@ -97,7 +100,7 @@
 
                         {showActivities ? (
                             <div style={{ display: "block" }}>
-                                <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 1 - Click for more details</div>
+                                <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>{activities}</div>
                                 <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 2 - Click for more details</div>
                                 <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 3 - Click for more details</div>
                                 <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 4 - Click for more details</div>
