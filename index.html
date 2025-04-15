@@ -25,7 +25,7 @@
 
             const activitiesStyles = {
                 height: "40px",
-                width: "600px",
+                maxWidth: "600px",
                 border: "1px solid black",
                 borderRadius: "50px",
                 margin: "10px",
@@ -86,13 +86,13 @@
                         <button style={{ ...buttonStyles, backgroundColor: '#33495E' }} onClick={() => handleButtonClick('#33495E', 'Busywork')}>Busywork</button>
                     </div>
 
-                    <div style={{height: '400px', width: '665px', backgroundColor: bgColor, borderRadius: 28 }}>
+                    <div style={{height: '400px', maxWidth: '665px', backgroundColor: bgColor, borderRadius: 28 }}>
 
                         
                         <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "20px 35px 0px", color: 'white', textShadow: '1px 1px 2px black' }}>
                             {headerText}
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
-                                <input type="text" placeholder="Search for activities..." style={{ padding: "10px", borderRadius: "50px", border: "1px solid black", width: "250px", backgroundColor: "lightgray", paddingRight: "30px" }} />
+                                <input type="text" placeholder="Search for activities..." style={{ padding: "10px", borderRadius: "50px", border: "1px solid black", backgroundColor: "lightgray", paddingRight: "30px" }} />
                                 <img src="https://img.icons8.com/?size=512&id=59872&format=png" style={{ width: "30px", height: "30px", cursor: "pointer" }} />
                             </div>
                         </h2>
