@@ -42,11 +42,12 @@
             const [headerText, setHeaderText] = React.useState('Select a category');
             const [showActivities, setShowActivities] = React.useState(true);
             const [activities, setActivities] = React.useState([]);
-
-            const Activities = [];
-            const uniqueKeys = new Set();
+            const [selectedActivity, setSelectedActivity] = React.useState(null);
 
             const fetchActivities = async (type) => {
+                const Activities = [];
+                const uniqueKeys = new Set();
+
                 while (Activities.length < 6) {
                     await fetch("https://bored.api.lewagon.com/api/activity/?type=" + type.toLowerCase())
                         .then(res => res.json())
@@ -57,19 +58,20 @@
                             }
                         });
                 }
-                console.log(Activities);
-                setActivities(Activities[0].activity);
-                console.log(Activities[0]);
+
+                setActivities([...Activities]);
             };
 
             const handleButtonClick = (color, text) => {
                 setBackgroundColor(color);
                 setHeaderText(text);
-                setShowActivities(true); // Reset to show activities when a main button is clicked
+                setShowActivities(true);
+                setSelectedActivity(null);
                 fetchActivities(text);
             };
 
-            const handleActivityClick = () => {
+            const handleActivityClick = (activityData) => {
+                setSelectedActivity(activityData);
                 setShowActivities(false);
             };
 
@@ -86,36 +88,38 @@
                         <button style={{ ...buttonStyles, backgroundColor: '#33495E' }} onClick={() => handleButtonClick('#33495E', 'Busywork')}>Busywork</button>
                     </div>
 
-                    <div style={{height: '400px', maxWidth: '665px', backgroundColor: bgColor, borderRadius: 28 }}>
+                    <div style={{maxWidth: '665px', backgroundColor: bgColor, borderRadius: 28, paddingBottom: "15px"}}>
 
-                        
-                        <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "20px 35px 0px", color: 'white', textShadow: '1px 1px 2px black' }}>
+                        <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "20px 25px 0px", color: 'white', textShadow: '1px 1px 2px black' }}>
                             {headerText}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
-                                <input type="text" placeholder="Search for activities..." style={{ padding: "10px", borderRadius: "50px", border: "1px solid black", backgroundColor: "lightgray", paddingRight: "30px" }} />
-                                <img src="https://img.icons8.com/?size=512&id=59872&format=png" style={{ width: "30px", height: "30px", cursor: "pointer" }} />
-                            </div>
+                            <input type="text" placeholder="Search for activities..." style={{ padding: "10px", borderRadius: "50px", border: "1px solid black", backgroundColor: "lightgray" }} />
                         </h2>
-                        
 
                         {showActivities ? (
                             <div style={{ display: "block" }}>
-                                <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>{activities}</div>
-                                <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 2 - Click for more details</div>
-                                <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 3 - Click for more details</div>
-                                <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 4 - Click for more details</div>
-                                <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 5 - Click for more details</div>
-                                <div style={{ ...activitiesStyles }} onClick={handleActivityClick}>Activity 6 - Click for more details</div>
+                                {activities.map((activityData, index) => (
+                                    <div
+                                        key={activityData.key || index}
+                                        style={{ ...activitiesStyles }}
+                                        onClick={() => handleActivityClick(activityData)}
+                                    >
+                                        {activityData.activity}
+                                    </div>
+                                ))}
                             </div>
                         ) : (
-                            <div style={{ ...activitiesStyles, height: "298px", display: "block", borderRadius: "20px"}}>
-                                <h3 style={{ paddingBottom: "20px"}}>Finish the code for your school project</h3>
-                                <p style={{ paddingBottom: "5px" }}>Type:</p>
-                                <p style={{ paddingBottom: "5px" }}>Participants:</p>
-                                <p style={{ paddingBottom: "5px" }}>Price:</p>
-                                <p style={{ paddingBottom: "5px" }}>Accessibility:</p>
-                                <p style={{ paddingBottom: "5px" }}>Link:</p>
-                            </div>
+                            selectedActivity && (
+                                <div style={{ ...activitiesStyles, height: "298px", maxWidth: "600px", display: "block", borderRadius: "20px", textAlign: "left" }}>
+                                    <h3 style={{ paddingBottom: "15px"}}>{selectedActivity.activity}</h3>
+                                    <p style={{ paddingBottom: "5px" }}><b>Type: </b>{headerText}</p>
+                                    <p style={{ paddingBottom: "5px" }}><b>Participants: </b>{selectedActivity.participants}</p>
+                                    <p style={{ paddingBottom: "5px" }}><b>Price: </b>€{selectedActivity.price*25}</p>
+                                    <p style={{ paddingBottom: "5px" }}><b>Accessibility: </b>{100-selectedActivity.accessibility*100}%</p>
+                                    <p style={{ paddingBottom: "5px" }}>
+                                        <b>Link: </b>{selectedActivity.link ? <a href={selectedActivity.link} target="_blank">{selectedActivity.link}</a> : "N/A"}
+                                    </p>
+                                </div>
+                            )
                         )}
                     </div>
                 </center>
