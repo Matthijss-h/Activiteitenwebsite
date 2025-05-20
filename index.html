@@ -38,6 +38,14 @@
                 cursor: "pointer"
             };
 
+            // Responsive style for activities text
+            let responsiveStyles = { ...activitiesStyles };
+            if (window.innerWidth <= 600) {
+                responsiveStyles.justifyContent = "center";
+                responsiveStyles.textAlign = "center";
+                responsiveStyles.paddingLeft = "0";
+            }
+
             const [bgColor, setBackgroundColor] = React.useState('lightgray');
             const [headerText, setHeaderText] = React.useState('Select a category');
             const [showActivities, setShowActivities] = React.useState(true);
@@ -88,7 +96,7 @@
                         <button style={{ ...buttonStyles, backgroundColor: '#33495E' }} onClick={() => handleButtonClick('#33495E', 'Busywork')}>Busywork</button>
                     </div>
 
-                    <div style={{maxWidth: '665px', backgroundColor: bgColor, borderRadius: 28, paddingBottom: "15px"}}>
+                    <div style={{ maxWidth: '665px', backgroundColor: bgColor, borderRadius: 28, paddingBottom: "15px" }}>
 
                         <h2 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: "20px 25px 0px", color: 'white', textShadow: '1px 1px 2px black' }}>
                             {headerText}
@@ -97,24 +105,26 @@
 
                         {showActivities ? (
                             <div style={{ display: "block" }}>
-                                {activities.map((activityData, index) => (
-                                    <div
-                                        key={activityData.key || index}
-                                        style={{ ...activitiesStyles }}
-                                        onClick={() => handleActivityClick(activityData)}
-                                    >
-                                        {activityData.activity}
-                                    </div>
-                                ))}
+                                {activities.map((activityData, index) => {
+                                    return (
+                                        <div
+                                            key={activityData.key || index}
+                                            style={responsiveStyles}
+                                            onClick={() => handleActivityClick(activityData)}
+                                        >
+                                            {activityData.activity}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         ) : (
                             selectedActivity && (
                                 <div style={{ ...activitiesStyles, height: "298px", maxWidth: "600px", display: "block", borderRadius: "20px", textAlign: "left" }}>
-                                    <h3 style={{ paddingBottom: "15px"}}>{selectedActivity.activity}</h3>
+                                    <h3 style={{ paddingBottom: "15px" }}>{selectedActivity.activity}</h3>
                                     <p style={{ paddingBottom: "5px" }}><b>Type: </b>{headerText}</p>
                                     <p style={{ paddingBottom: "5px" }}><b>Participants: </b>{selectedActivity.participants}</p>
-                                    <p style={{ paddingBottom: "5px" }}><b>Price: </b>€{selectedActivity.price*25}</p>
-                                    <p style={{ paddingBottom: "5px" }}><b>Accessibility: </b>{100-selectedActivity.accessibility*100}%</p>
+                                    <p style={{ paddingBottom: "5px" }}><b>Price: </b>€{selectedActivity.price * 25}</p>
+                                    <p style={{ paddingBottom: "5px" }}><b>Accessibility: </b>{selectedActivity.accessibility * 100}%</p>
                                     <p style={{ paddingBottom: "5px" }}>
                                         <b>Link: </b>{selectedActivity.link ? <a href={selectedActivity.link} target="_blank">{selectedActivity.link}</a> : "N/A"}
                                     </p>
